@@ -2,8 +2,8 @@
 
 **Synthetic behavioral health data for SQL, analytics, and application testing.**
 
-[![PyPI version](https://img.shields.io/pypi/v/bhsim?label=PyPI)](https://pypi.org/project/bhsim/)
-[![Python versions](https://img.shields.io/pypi/pyversions/bhsim)](https://pypi.org/project/bhsim/)
+[![PyPI version](https://img.shields.io/pypi/v/bhsim.svg)](https://pypi.org/project/bhsim/)
+![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Actions](https://github.com/rahulbyrapuneni/bhsim/actions/workflows/tests.yml/badge.svg)](https://github.com/rahulbyrapuneni/bhsim/actions)
 
