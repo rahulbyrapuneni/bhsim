@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/bhsim-banner.png" alt="BHSim — Python library for synthetic behavioral health data" width="850">
+  <img src="https://raw.githubusercontent.com/rahulbyrapuneni/bhsim/main/assets/bhsim-banner.png"
+       alt="BHSim - Python library for synthetic behavioral health data"
+       width="850">
 </p>
 
 <p align="center">
