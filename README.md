@@ -21,6 +21,16 @@ BHSim is an open-source Python library for creating **synthetic behavioral healt
 
 The goal is simple: make it easier to learn, build, and test behavioral health analytics without needing access to real patient information.
 
+## Try BHSim Online
+
+Want to explore BHSim before installing it?
+
+**[Launch the BHSim Python Playground](https://bhsim-playground.streamlit.app/)**
+
+The interactive playground lets you configure simulations, experiment with supported Python code, explore generated records, and download synthetic datasets.
+
+The playground uses the actual BHSim Python library.
+
 ## Why BHSim?
 
 A spreadsheet of random names and dates is fine for a basic exercise. It becomes less useful when you need to answer questions across several tables: Which programs have the highest no-show rates? How many appointments did an employee complete? How did an individual's assessment scores change over time?
