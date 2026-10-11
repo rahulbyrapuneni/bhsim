@@ -1,0 +1,7 @@
+key,value
+config,"{""clients"": 1000, ""employees"": 100, ""future_days"": 30, ""months"": 12, ""reference_date"": ""2026-10-10"", ""seed"": 42}"
+engine_version,1.0.0rc1
+synthetic_only,true
+instrument_scope,PHQ-9 and GAD-7; complete-case summation only; synthetic screening data
+id_lengths,"{""assessment"": 10, ""assignment"": 9, ""employee"": 6, ""enrollment"": 9, ""individual"": 7, ""instrument"": 5, ""location"": 5, ""option"": 6, ""productivity"": 10, ""program"": 4, ""question"": 7, ""response"": 12, ""rule"": 7, ""score"": 10, ""supervision"": 9, ""visit"": 10, ""visit_type"": 5}"
+id_scheme,seeded-numeric-permutation-v1

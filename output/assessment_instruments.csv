@@ -1,0 +1,3 @@
+instrument_id,instrument_code,instrument_version,item_count,scoring_method
+46566,PHQ9,v1,9,SUM_COMPLETE_ITEMS
+86191,GAD7,v1,7,SUM_COMPLETE_ITEMS

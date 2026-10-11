@@ -1,0 +1,9 @@
+program_id,program_code,description,program_group,no_show_probability
+6377,MH-OP,Mental Health Outpatient,MH,0.18
+1984,MH-CS,Mental Health Case Management,MH,0.13
+4669,MH-CR,Crisis Services,MH,0.06
+4009,SA-OP,Substance Use Outpatient,SA,0.24
+6573,SA-IOP,Intensive Outpatient,SA,0.21
+7558,SA-RC,Recovery Support,SA,0.16
+7721,IDD-CS,IDD Community Support,IDD,0.11
+9245,IDD-CC,IDD Care Coordination,IDD,0.09

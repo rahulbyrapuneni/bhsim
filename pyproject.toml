@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bhsim"
+version = "1.0.0rc1"
+description = "Privacy-first synthetic behavioral health operations simulator"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Rahul Byrapuneni"}]
+maintainers = [{name = "Rahul Byrapuneni"}]
+keywords = ["synthetic-data", "behavioral-health", "sqlite", "power-bi"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+ui = ["streamlit>=1.35", "pandas>=2.0"]
+
+[project.scripts]
+bhsim = "bhsim.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

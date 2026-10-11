@@ -1,0 +1,9 @@
+option_id,instrument_id,option_text,score_value
+812765,46566,Not at all,0
+138060,46566,Several days,1
+077664,46566,More than half the days,2
+209992,46566,Nearly every day,3
+291589,86191,Not at all,0
+834800,86191,Several days,1
+475397,86191,More than half the days,2
+830253,86191,Nearly every day,3
