@@ -1,56 +1,45 @@
-# BHSim
-
 <p align="center">
-  <img src="assets/bhsim-banner.png" alt="BHSim - Python library for synthetic behavioral health data" width="850">
+  <img src="assets/bhsim-banner.png" alt="BHSim — Python library for synthetic behavioral health data" width="850">
 </p>
 
-**Synthetic behavioral health data for SQL, analytics, and application testing.**
+<p align="center">
+  <a href="https://pypi.org/project/bhsim/"><img src="https://img.shields.io/badge/PyPI-bhsim-245A81" alt="BHSim on PyPI"></a>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-245A81" alt="Python 3.10 or newer">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-245A81" alt="MIT License"></a>
+  <a href="https://github.com/rahulbyrapuneni/bhsim/actions/workflows/tests.yml"><img src="https://github.com/rahulbyrapuneni/bhsim/actions/workflows/tests.yml/badge.svg" alt="Automated tests"></a>
+</p>
 
-[![PyPI Version](https://img.shields.io/badge/PyPI-1.0.0rc3-blue)](https://pypi.org/project/bhsim/)
-![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub Actions](https://github.com/rahulbyrapuneni/bhsim/actions/workflows/tests.yml/badge.svg)](https://github.com/rahulbyrapuneni/bhsim/actions)
+<p align="center">
+  <a href="https://pypi.org/project/bhsim/">PyPI</a> ·
+  <a href="https://github.com/rahulbyrapuneni/bhsim/releases">Releases</a> ·
+  <a href="https://github.com/rahulbyrapuneni/bhsim/issues">Report an issue</a>
+</p>
 
-**[Install from PyPI](https://pypi.org/project/bhsim/) · [Source code](https://github.com/rahulbyrapuneni/bhsim) · [Report an issue](https://github.com/rahulbyrapuneni/bhsim/issues)**
+BHSim is an open-source Python library for creating **synthetic behavioral health data**. It generates fictional but connected records for individuals, programs, employees, appointments, productivity, and screening assessments, then saves them in a SQLite database you can query immediately.
 
-BHSim is an open-source Python library that generates **fictional, interconnected behavioral health records**. It gives analysts, developers, students, and educators a ready-to-query dataset without asking them to find or handle real patient information.
-
-In a few lines of Python, you can create a SQLite database containing individuals, programs, enrollments, employees, appointments, productivity records, and screening assessments. Use it to practice SQL joins, prototype Power BI dashboards, develop analytics features, or test software that expects relational healthcare-style data.
-
-> **Release status:** `1.0.0rc3` is a public **release candidate**. Install this specific version using the command below. BHSim is intended for development, demonstrations, and education—not clinical decisions, official quality reporting, or billing.
+The goal is simple: make it easier to learn, build, and test behavioral health analytics without needing access to real patient information.
 
 ## Why BHSim?
 
-Sample spreadsheets are useful for learning individual SQL queries, but real analytics often depends on **relationships between records**. An individual may participate in several programs, a staff member may serve multiple programs, and each appointment must connect to the right people and enrollment history.
+A spreadsheet of random names and dates is fine for a basic exercise. It becomes less useful when you need to answer questions across several tables: Which programs have the highest no-show rates? How many appointments did an employee complete? How did an individual's assessment scores change over time?
 
-BHSim generates those relationships for you, so you can spend more time learning, querying, building, and testing—and less time assembling fake data by hand.
+BHSim gives those records meaningful connections. Individuals can enroll in multiple programs, employees can work across programs, and visits are linked to the relevant people and services. You can focus on the query, dashboard, or application you're building instead of assembling test data by hand.
 
-**Common uses:**
+BHSim is useful for SQL practice, Power BI prototypes, analytics development, teaching, portfolio work, and testing data pipelines or applications that use relational records.
 
-- **SQL practice:** Join visits with individuals, employees, programs, and enrollments.
-- **BI dashboards:** Explore attendance, no-shows, program activity, staff workload, and screening trends.
-- **Application testing:** Test database queries, ETL pipelines, APIs, and analytics features with fictional records.
-- **Teaching and portfolio projects:** Demonstrate healthcare-style reporting without sharing protected health information (PHI).
+## Installation
 
+BHSim requires **Python 3.10 or newer** and is available on [PyPI](https://pypi.org/project/bhsim/).
+
+```bash
+pip install bhsim
+```
+
+No database server, paid API, or real patient dataset is required.
 
 ## Quick start
 
-**Requirements:** Python 3.10 or newer.
-
-BHSim is available on PyPI. No database server, paid API,
-or real patient information is required.
-
-### Install BHSim
-
-```bash
-pip install bhsim==1.0.0rc3
-```
-
-BHSim is currently available as a public release candidate.
-
-### Generate your first dataset
-
-Create a file named `example.py`:
+Create a Python file, such as `example.py`:
 
 ```python
 from bhsim import BHSimulator
@@ -60,36 +49,31 @@ sim = BHSimulator(
     employees=80,
     history_months=12,
     future_days=30,
-    seed=42
+    seed=42,
 )
 
 sim.generate("behavioral_health.db")
-
 print(sim.validate())
-
 sim.to_csv("output")
 ```
 
-Run:
+Run it with:
 
 ```bash
 python example.py
 ```
 
-This generates a SQLite database containing connected synthetic
-behavioral health records and exports CSV files for analysis.
+You'll have:
 
-You can explore the data with SQLite, Python, Excel, or Power BI.
+- **`behavioral_health.db`** — a SQLite database with related tables and sample records.
+- **`output/`** — CSV exports for Excel, Power BI, or other tools.
+- **A validation result** — the output of `sim.validate()`. A successful check returns `{'valid': True, 'issues': []}`.
 
-You will get:
+BHSim will not overwrite an existing database file. Choose a new filename when generating another dataset.
 
-- **`behavioral_health.db`** — a SQLite database with related synthetic tables.
-- **`output/`** — CSV exports you can load into spreadsheets or BI tools.
-- **Validation results** — a report checking the dataset's core consistency rules. A passing result includes `"valid": true` and an empty `issues` list.
+### Command-line usage
 
-**Note:** BHSim does not overwrite an existing database file. Use a new filename if you want to generate another dataset.
-
-### Prefer a command-line workflow?
+You can generate, validate, and export data without writing a Python script:
 
 ```bash
 python -m bhsim generate demo.db --clients 100 --seed 42
@@ -97,28 +81,28 @@ python -m bhsim validate demo.db
 python -m bhsim export-csv demo.db output
 ```
 
-You can also use the installed `bhsim` command when it is available on your system's PATH.
+## What does BHSim generate?
 
-## What's inside the database?
-
-| Area | Tables | What you'll find |
+| Area | Main tables | Contents |
 | --- | --- | --- |
-| Individuals and programs | `individuals`, `programs`, `individual_programs` | Fictional people, MH/SA/IDD programs, admissions, discharges, and re-enrollments |
-| Workforce | `employees`, `employee_programs`, `employee_supervision` | Staff members, program assignments, and reporting relationships |
-| Appointments | `visits`, `visit_types`, `locations` | Scheduled and completed visits, no-shows, cancellations, rescheduling, and service times |
-| Productivity | `productivity_rules`, `visit_productivity` | Illustrative productivity rules and visit-linked units |
-| Screening assessments | `assessment_instruments`, `assessment_questions`, `answer_options`, `assessments`, `assessment_responses`, `assessment_scores` | PHQ-9 and GAD-7 items, answer options, responses, and scores |
-| Generation details | `simulation_metadata` | Information about the simulation run |
+| Individuals and programs | `individuals`, `programs`, `individual_programs` | Fictional individuals, behavioral health programs, and enrollment histories |
+| Workforce | `employees`, `employee_programs`, `employee_supervision` | Employee assignments and reporting relationships |
+| Appointments | `visits`, `visit_types`, `locations` | Completed visits, no-shows, cancellations, rescheduling, and scheduled appointments |
+| Productivity | `productivity_rules`, `visit_productivity` | Illustrative productivity rules and visit-level activity |
+| Screening assessments | `assessment_instruments`, `assessment_questions`, `answer_options`, `assessments`, `assessment_responses`, `assessment_scores` | PHQ-9 and GAD-7 questions, responses, and scores |
+| Simulation details | `simulation_metadata` | Information about the dataset generation run |
 
-There is also an **`assessment_responses_readable`** SQL view that brings together assessment questions and selected answers.
+The database also includes an `assessment_responses_readable` view so you can see assessment questions and selected answers without writing several joins.
 
-Records use primary and foreign keys. IDs are fixed-width, numeric-looking **text** values—not sequential row numbers. Names can repeat, so use IDs rather than names for joins.
+Tables are connected through primary and foreign keys. Identifiers are fixed-width, numeric-looking strings. **Join on IDs, not names**: different fictional people may have the same name.
 
-## Explore your data with SQL
+## Try a few SQL queries
 
-Open `behavioral_health.db` in a SQLite-compatible tool such as [SQLime](https://sqlime.org/), DB Browser for SQLite, or Python's built-in `sqlite3` module.
+Open `behavioral_health.db` in a SQLite-compatible tool, such as [SQLime](https://sqlime.org/), DB Browser for SQLite, or Python's `sqlite3` module.
 
-### 1. Appointments by program
+### Appointments by program
+
+See how appointment activity differs across programs:
 
 ```sql
 SELECT
@@ -134,9 +118,9 @@ GROUP BY p.program_code, p.description
 ORDER BY total_appointments DESC;
 ```
 
-**What it tells you:** Which programs have the most scheduled activity, completed appointments, and no-shows.
+### No-show rate by program
 
-### 2. No-show rate by program
+This example uses completed and no-show visits as the denominator. Your organization may define this metric differently.
 
 ```sql
 SELECT
@@ -156,9 +140,7 @@ GROUP BY p.program_code
 ORDER BY no_show_percentage DESC;
 ```
 
-**What it tells you:** The percentage of eligible appointments marked as no-shows. This example uses **completed + no-show** visits as the denominator; actual organizations may define their reporting measures differently.
-
-### 3. Visit history with individual and employee names
+### See who was scheduled for a visit
 
 ```sql
 SELECT
@@ -176,9 +158,7 @@ ORDER BY v.scheduled_start DESC
 LIMIT 20;
 ```
 
-**What it tells you:** How appointments connect to the individual receiving services, the program, and the assigned employee.
-
-### 4. Explore PHQ-9 and GAD-7 responses
+### Read PHQ-9 and GAD-7 responses
 
 ```sql
 SELECT
@@ -190,42 +170,48 @@ FROM assessment_responses_readable
 LIMIT 20;
 ```
 
-**What it tells you:** Readable questions, answer choices, and simulated response scores, without writing several joins yourself.
+BHSim includes simulated PHQ-9 (nine scored questions; complete score range 0–27) and GAD-7 (seven scored questions; complete score range 0–21) responses. These values are for testing and demonstration, **not clinical interpretation**.
 
-PHQ-9 has nine scored items (complete total **0–27**), while GAD-7 has seven (complete total **0–21**). Incomplete submissions do not have complete total scores. These are simulated screening responses, **not diagnoses or clinically validated trajectories**.
+## Adjust the dataset
 
-## Customize your simulation
+You can change the size, time period, or random seed when creating a simulator.
 
-| Python argument | Example | Meaning |
+| Argument | Example | Purpose |
 | --- | --- | --- |
 | `clients` | `1000` | Number of fictional individuals |
 | `employees` | `80` | Number of fictional staff members |
-| `history_months` | `12` | Historical period to simulate |
-| `future_days` | `30` | Number of days of future appointments |
+| `history_months` | `12` | Length of simulated history |
+| `future_days` | `30` | Days of future scheduled appointments |
 | `reference_date` | `"2026-10-10"` | Reference date in `YYYY-MM-DD` format |
-| `seed` | `42` | Random seed for repeatable results |
+| `seed` | `42` | Controls reproducibility |
 
-Using the same version, settings, and seed produces a reproducible simulation. Change the seed to produce a different fictional dataset.
+Using the same BHSim version, settings, and seed produces reproducible data. Changing the seed produces a different dataset.
 
-Some operational assumptions—including program hours, probabilities, and productivity calculations—are predefined in this release rather than exposed as user settings.
+Some assumptions, including program hours and productivity calculations, are built into the current simulator rather than configurable through the public API.
 
-## Check data quality
+## Checking data quality
 
-BHSim includes built-in validation:
+BHSim includes a built-in validator:
 
-```bash
-python -m bhsim validate demo.db
+```python
+print(sim.validate())
 ```
 
-You can also independently inspect a SQLite database with a few simple queries.
+You can also validate a saved database from the command line:
 
-**Check broken foreign-key relationships** (expected: no rows):
+```bash
+python -m bhsim validate behavioral_health.db
+```
+
+For an independent check, try these SQL queries.
+
+**Foreign-key integrity** — expect no rows:
 
 ```sql
 PRAGMA foreign_key_check;
 ```
 
-**Check completed visits with missing or invalid service times** (expected: `0`):
+**Completed appointments with missing or invalid service times** — expect `0`:
 
 ```sql
 SELECT COUNT(*) AS invalid_completed_visits
@@ -238,7 +224,7 @@ WHERE visit_status = 'COMPLETED'
   );
 ```
 
-**Check visits without a matching enrollment** (expected: `0` under the current simulation rules):
+**Visits without a matching program enrollment** — expect `0` under the current simulation rules:
 
 ```sql
 SELECT COUNT(*) AS visits_outside_enrollment
@@ -256,20 +242,22 @@ WHERE NOT EXISTS (
 );
 ```
 
-These checks validate **structural and business-rule consistency**. They do not demonstrate that the generated rates or outcomes represent real behavioral health populations.
+These tests check data relationships and defined business rules. They do **not** establish that generated attendance rates, diagnoses, or assessment patterns match real populations.
 
-## Use BHSim with Power BI
+## Working with Power BI
 
-1. Generate the data and export it to CSV using `sim.to_csv("output")`.
-2. In Power BI Desktop, select **Get data → Text/CSV** and load the files you need.
-3. Use the ID columns to create relationships between individuals, visits, programs, and employees.
-4. Build visuals for program activity, appointment statuses, staff productivity, or assessment trends.
+If you're building a Power BI report, the easiest path is to export the database to CSV:
 
-You can also access SQLite directly through a compatible connector or ODBC configuration, if you prefer not to export CSV files.
+1. Run `sim.to_csv("output")` after generating your dataset.
+2. In Power BI Desktop, use **Get data → Text/CSV** to load the tables you need.
+3. Connect the tables using their ID columns.
+4. Explore appointment outcomes, program activity, productivity, or assessment trends.
 
-## Develop and contribute
+You can also use a suitable SQLite connector or ODBC configuration instead of CSV exports.
 
-Clone the repository and install development dependencies:
+## Development and contributions
+
+To run BHSim from source:
 
 ```bash
 git clone https://github.com/rahulbyrapuneni/bhsim.git
@@ -278,33 +266,31 @@ python -m pip install -e ".[dev]"
 python -m pytest -q
 ```
 
-The main library lives in `src/bhsim/`. An **optional** Streamlit demo is available in the repository:
+The library code is in `src/bhsim/`. The repository also contains an optional Streamlit demo:
 
 ```bash
 python -m pip install -e ".[ui]"
 python -m streamlit run app.py
 ```
 
-The demo is not required to install or use BHSim as a Python library.
+The demo is optional; you don't need Streamlit to use the Python library.
 
-Suggestions, bug reports, documentation improvements, and pull requests are welcome through [GitHub Issues](https://github.com/rahulbyrapuneni/bhsim/issues). Please **never submit real patient information or PHI** in issues, sample files, or tests.
+Issues, bug reports, documentation corrections, and pull requests are welcome. Open an [issue](https://github.com/rahulbyrapuneni/bhsim/issues) if something isn't working or you have an idea worth discussing. Please do not include real patient data or other sensitive information in sample files, issues, or contributions.
 
-## Important limitations
+## Scope and limitations
 
-- **Synthetic, not sourced from patients:** BHSim generates fictional records and does not retrieve information from electronic health records.
-- **Not a clinical model:** Demographic distributions, attendance behavior, utilization, and assessment trends are illustrative—not validated predictions of real populations.
-- **Not for care decisions:** PHQ-9 and GAD-7 outputs must not be used for diagnosis, clinical decision support, or treatment recommendations.
-- **Not billing guidance:** Productivity rules and units are examples, not payer-approved reimbursement logic.
-- **Simplified workflows:** The current scheduling and program-enrollment rules do not cover every real-world exception or organization-specific workflow.
-- **Schema versions matter:** Existing databases are not migrated automatically. Current releases use `full_name`; older generated datasets may contain `synthetic_name`.
-- **Assessment rights:** Questionnaire wording and instrument-related rights belong to their respective owners. Confirm any applicable usage or redistribution requirements, particularly for clinical or commercial uses.
+BHSim creates fictional data for education, development, and analytics testing. It does not connect to an EHR or use actual patient records.
 
-## License and credits
+The generated population, service patterns, and assessment responses are illustrative. They should not be treated as statistically representative of a real community or organization. BHSim is **not** intended for diagnosis, treatment decisions, clinical decision support, official quality reporting, or reimbursement calculations. Productivity units are examples, not payer billing rules.
 
-BHSim is open-source software released under the [MIT License](LICENSE). Third-party assessment rights and attribution are separate from the software license.
+The data model simplifies some real-world workflows. Existing generated databases are not migrated automatically between schema versions; if you need the latest schema, generate a new dataset. In particular, current versions use `full_name`, whereas older datasets may contain `synthetic_name`.
 
-**Creator and maintainer:** [Rahul Byrapuneni](https://github.com/rahulbyrapuneni)
+PHQ-9 and GAD-7 instrument wording and related rights remain with their respective owners. The MIT License for BHSim's software does not grant additional rights to third-party assessment materials; verify applicable requirements before redistribution or commercial use.
 
-Created with behavioral health analytics domain direction and AI-assisted software development.
+## License and author
 
-**Links:** [PyPI](https://pypi.org/project/bhsim/) · [GitHub](https://github.com/rahulbyrapuneni/bhsim) · [Issues](https://github.com/rahulbyrapuneni/bhsim/issues)
+BHSim is released under the [MIT License](LICENSE).
+
+**Created and maintained by [Rahul Byrapuneni](https://github.com/rahulbyrapuneni).** Developed with behavioral health analytics domain input and AI-assisted implementation.
+
+[PyPI](https://pypi.org/project/bhsim/) · [Source code](https://github.com/rahulbyrapuneni/bhsim) · [Releases](https://github.com/rahulbyrapuneni/bhsim/releases) · [Issues](https://github.com/rahulbyrapuneni/bhsim/issues)
