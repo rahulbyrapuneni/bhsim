@@ -67,3 +67,20 @@ py -m pytest -q
 - Staffing overlap validation covers completed services; the model is not a full appointment-booking system.
 - Program hours and productivity configuration currently live in the engine, rather than a public configuration file.
 - PHQ-9/GAD-7 questionnaire text should retain attribution to their original instrument authors in any redistribution. Consult the instrument usage policies for intended clinical uses.
+
+## Names and identifiers
+
+Individuals and employees have a readable `full_name` field. Names are invented by combining
+first and last names from built-in lists. They can repeat; **IDs, not names, are the keys**.
+The database contains no real patient records. This release renames `synthetic_name` to
+`full_name` in new outputs, so SQL written for the previous release must be updated.
+
+```sql
+SELECT i.individual_id, i.full_name, v.visit_status
+FROM individuals AS i
+JOIN visits AS v ON v.individual_id = i.individual_id
+LIMIT 20;
+```
+
+Existing databases are not modified by upgrading the package; generate a fresh database
+for the new schema.

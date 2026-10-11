@@ -7,4 +7,9 @@ __pycache__/
 csv_output*/
 output_csv/
 .env
+
 output/
+bhsim-test-env/
+generated/
+dist/
+build/

@@ -67,13 +67,32 @@ def make_id(kind: str, number: int, seed: int = 42) -> str:
     return f"{left:0{length - right_digits}d}{right:0{right_digits}d}"
 
 
-FIRST = ["Alex", "Jordan", "Taylor", "Casey", "Avery", "Morgan", "Sam", "Riley", "Quinn", "Cameron"]
-LAST = ["Carter", "Reed", "Morgan", "Patel", "Lee", "Rivera", "Brooks", "Wright", "Clark", "Diaz"]
+FIRST = [
+    "Alex", "Aisha", "Amara", "Amelia", "Andre", "Anika", "Arjun", "Avery", "Benjamin", "Blake",
+    "Brianna", "Caleb", "Camila", "Cameron", "Carlos", "Casey", "Charlotte", "Chloe", "Daniel", "David",
+    "Dev", "Diana", "Diego", "Elena", "Elias", "Emily", "Emma", "Ethan", "Eva", "Fatima",
+    "Gabriel", "Grace", "Hannah", "Harper", "Henry", "Isabella", "Ivy", "Jack", "Jade", "James",
+    "Jasmine", "Jayden", "Jordan", "Jose", "Joshua", "Julian", "Kai", "Kiran", "Layla", "Leo",
+    "Liam", "Lily", "Logan", "Lucas", "Luis", "Maya", "Meera", "Mia", "Miguel", "Mila",
+    "Morgan", "Naomi", "Nikhil", "Noah", "Nora", "Olivia", "Omar", "Priya", "Quinn", "Rafael",
+    "Rahul", "Riley", "Riya", "Ryan", "Sam", "Sana", "Sara", "Sofia", "Sophia", "Taylor",
+    "Theo", "Victoria", "Vivian", "William", "Yara", "Zara"
+]
+LAST = [
+    "Ahmed", "Ali", "Anderson", "Baker", "Banerjee", "Bennett", "Brooks", "Brown", "Campbell", "Carter",
+    "Chen", "Clark", "Collins", "Cooper", "Davis", "Diaz", "Edwards", "Evans", "Flores", "Garcia",
+    "Gonzalez", "Green", "Gupta", "Hall", "Harris", "Hernandez", "Hill", "Jackson", "Jain", "Johnson",
+    "Jones", "Kapoor", "Khan", "Kim", "Kumar", "Lee", "Lewis", "Lopez", "Martin", "Martinez",
+    "Miller", "Mitchell", "Moore", "Morgan", "Murphy", "Nguyen", "Ortiz", "Parker", "Patel", "Perez",
+    "Price", "Ramirez", "Rao", "Reed", "Rivera", "Roberts", "Robinson", "Rodriguez", "Ross", "Scott",
+    "Shah", "Sharma", "Singh", "Smith", "Stewart", "Taylor", "Thomas", "Thompson", "Turner", "Walker",
+    "Wang", "White", "Williams", "Wilson", "Wright", "Young"
+]
 SCHEMA = """
 PRAGMA foreign_keys=ON;
-CREATE TABLE individuals (individual_id TEXT PRIMARY KEY, synthetic_name TEXT NOT NULL, date_of_birth TEXT NOT NULL, sex TEXT NOT NULL);
+CREATE TABLE individuals (individual_id TEXT PRIMARY KEY, full_name TEXT NOT NULL, date_of_birth TEXT NOT NULL, sex TEXT NOT NULL);
 CREATE TABLE programs (program_id TEXT PRIMARY KEY, program_code TEXT UNIQUE NOT NULL, description TEXT NOT NULL, program_group TEXT NOT NULL, no_show_probability REAL NOT NULL);
-CREATE TABLE employees (employee_id TEXT PRIMARY KEY, synthetic_name TEXT NOT NULL, supervisor_id TEXT REFERENCES employees(employee_id));
+CREATE TABLE employees (employee_id TEXT PRIMARY KEY, full_name TEXT NOT NULL, supervisor_id TEXT REFERENCES employees(employee_id));
 CREATE TABLE visit_types (visit_type_id TEXT PRIMARY KEY, description TEXT NOT NULL, typical_minutes INTEGER NOT NULL, variation_minutes INTEGER NOT NULL);
 CREATE TABLE locations (location_id TEXT PRIMARY KEY, location_name TEXT NOT NULL);
 CREATE TABLE individual_programs (enrollment_id TEXT PRIMARY KEY, individual_id TEXT NOT NULL REFERENCES individuals(individual_id), program_id TEXT NOT NULL REFERENCES programs(program_id), start_date TEXT NOT NULL, end_date TEXT, CHECK(end_date IS NULL OR end_date >= start_date));
@@ -219,11 +238,11 @@ def generate(path: str | Path, config: Config | None = None) -> dict:
             individuals=[]
             for i in range(1, config.clients+1):
                 dob = today - timedelta(days=rng.randint(16*365,80*365))
-                individuals.append((make_id("individual",i), f"{rng.choice(FIRST)} {rng.choice(LAST)} #{i}",dob.isoformat(),rng.choice(["F","M","X"])))
+                individuals.append((make_id("individual",i), f"{rng.choice(FIRST)} {rng.choice(LAST)}",dob.isoformat(),rng.choice(["F","M","X"])))
             con.executemany("INSERT INTO individuals VALUES (?,?,?,?)",individuals)
             employees=[]
             for i in range(1,config.employees+1):
-                employees.append((make_id("employee",i),f"{rng.choice(FIRST)} {rng.choice(LAST)} Staff #{i}",make_id("employee",rng.randint(1,i-1)) if i>1 and rng.random()<.8 else None))
+                employees.append((make_id("employee",i),f"{rng.choice(FIRST)} {rng.choice(LAST)}",make_id("employee",rng.randint(1,i-1)) if i>1 and rng.random()<.8 else None))
             con.executemany("INSERT INTO employees VALUES (?,?,?)",employees)
             employee_assignments=[]
             by_program={p[0]:[] for p in PROGRAMS}
@@ -476,7 +495,7 @@ def generate(path: str | Path, config: Config | None = None) -> dict:
             con.executemany("INSERT INTO visit_productivity VALUES (?,?,?,?)",[
                 (make_id("productivity",n),v[0],make_id("rule",program_index[v[2]]),v[14])
                 for n,v in enumerate(visits,1)])
-            con.executemany("INSERT INTO simulation_metadata VALUES (?,?)",[("config",json.dumps(asdict(config),sort_keys=True)),("engine_version","1.0.0rc1"),("synthetic_only","true"),("instrument_scope","PHQ-9 and GAD-7; complete-case summation only; synthetic screening data"),("id_lengths",json.dumps(ID_LENGTHS,sort_keys=True)),("id_scheme","seeded-numeric-permutation-v1")])
+            con.executemany("INSERT INTO simulation_metadata VALUES (?,?)",[("config",json.dumps(asdict(config),sort_keys=True)),("engine_version","1.0.0rc2"),("synthetic_only","true"),("instrument_scope","PHQ-9 and GAD-7; complete-case summation only; synthetic screening data"),("id_lengths",json.dumps(ID_LENGTHS,sort_keys=True)),("id_scheme","seeded-numeric-permutation-v1")])
             counts={t:con.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0] for t in ["individuals","programs","employees","individual_programs","employee_programs","visits","assessments","assessment_responses"]}
     except Exception:
         try:
