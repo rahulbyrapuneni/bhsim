@@ -6,7 +6,7 @@
 
 **Synthetic behavioral health data for SQL, analytics, and application testing.**
 
-[![PyPI Version](https://img.shields.io/badge/PyPI-1.0.0rc2-blue)](https://pypi.org/project/bhsim/)
+[![PyPI Version](https://img.shields.io/badge/PyPI-1.0.0rc3-blue)](https://pypi.org/project/bhsim/)
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Actions](https://github.com/rahulbyrapuneni/bhsim/actions/workflows/tests.yml/badge.svg)](https://github.com/rahulbyrapuneni/bhsim/actions)
@@ -17,7 +17,7 @@ BHSim is an open-source Python library that generates **fictional, interconnecte
 
 In a few lines of Python, you can create a SQLite database containing individuals, programs, enrollments, employees, appointments, productivity records, and screening assessments. Use it to practice SQL joins, prototype Power BI dashboards, develop analytics features, or test software that expects relational healthcare-style data.
 
-> **Release status:** `1.0.0rc2` is a public **release candidate**. Install this specific version using the command below. BHSim is intended for development, demonstrations, and education—not clinical decisions, official quality reporting, or billing.
+> **Release status:** `1.0.0rc3` is a public **release candidate**. Install this specific version using the command below. BHSim is intended for development, demonstrations, and education—not clinical decisions, official quality reporting, or billing.
 
 ## Why BHSim?
 
