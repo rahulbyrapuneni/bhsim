@@ -1,5 +1,9 @@
 # BHSim
 
+<p align="center">
+  <img src="assets/bhsim-banner.png" alt="BHSim - Python library for synthetic behavioral health data" width="850">
+</p>
+
 **Synthetic behavioral health data for SQL, analytics, and application testing.**
 
 [![PyPI Version](https://img.shields.io/badge/PyPI-1.0.0rc2-blue)](https://pypi.org/project/bhsim/)
