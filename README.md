@@ -28,23 +28,25 @@ BHSim generates those relationships for you, so you can spend more time learning
 - **Application testing:** Test database queries, ETL pipelines, APIs, and analytics features with fictional records.
 - **Teaching and portfolio projects:** Demonstrate healthcare-style reporting without sharing protected health information (PHI).
 
-## Install
 
-**Requirements:** Python 3.10 or newer. No database server, paid service, or patient dataset is required.
+## Quick start
 
-Install the published release candidate from [PyPI](https://pypi.org/project/bhsim/):
+**Requirements:** Python 3.10 or newer.
+
+BHSim is available on PyPI. No database server, paid API,
+or real patient information is required.
+
+### Install BHSim
 
 ```bash
-python -m pip install bhsim==1.0.0rc2
+pip install bhsim==1.0.0rc3
 ```
 
-On Windows, you can use `py -m pip` in place of `python -m pip`.
+BHSim is currently available as a public release candidate.
 
-> **Why specify the version?** PyPI currently hosts a release candidate. Specifying `1.0.0rc2` ensures pip selects it even when prereleases are not normally included.
+### Generate your first dataset
 
-## Generate your first dataset
-
-Create a file called `example.py`:
+Create a file named `example.py`:
 
 ```python
 from bhsim import BHSimulator
@@ -54,19 +56,26 @@ sim = BHSimulator(
     employees=80,
     history_months=12,
     future_days=30,
-    seed=42,
+    seed=42
 )
 
 sim.generate("behavioral_health.db")
+
 print(sim.validate())
+
 sim.to_csv("output")
 ```
 
-Run it:
+Run:
 
 ```bash
 python example.py
 ```
+
+This generates a SQLite database containing connected synthetic
+behavioral health records and exports CSV files for analysis.
+
+You can explore the data with SQLite, Python, Excel, or Power BI.
 
 You will get:
 
